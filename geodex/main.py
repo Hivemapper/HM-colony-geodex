@@ -46,6 +46,8 @@ def parse_args(args):
                         type=str, help=("Output tile format string."
                                         "Only valid for tile-formats `google` or `tms`."
                                         "Default: '{x} {y} {z}'. Example: '{z}-{x}-{y}'"))
+    parser.add_argument('--output-file', '-f', default='',
+                        type=str, help=("Output file."))
 
     # turn Namespace into dictionary
     parsed_args = vars(parser.parse_args(args))
@@ -63,6 +65,12 @@ def cli():
     zoom = args.get('zoom')
     tile_format = args.get('tile-format')
     output_format = args.get('output_format')
+    output_file_name = args.get('output_file')
+    output_file = None
+    print("File", output_file_name)
+    print("Format", output_format)
+    if output_file_name != '':
+        output_file = open(output_file_name,"w")
 
     st_dt = dt.now()  # Start time
     logger.info('Elapsed time: %s', st_dt)
@@ -74,7 +82,7 @@ def cli():
     geojson_bounds = load_geojson(geojson_fpath)
 
     # Process all polygons
-    process_geojson(geojson_bounds, zoom, tile_format, output_format)
+    process_geojson(geojson_bounds, zoom, tile_format, output_format, output_file)
 
     #########################################
     # Print some final details

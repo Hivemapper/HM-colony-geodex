@@ -76,13 +76,13 @@ def tile_search(boundary, max_zoom, tile_format='google',
     return total_tiles
 
 
-def process_geojson(boundaries, max_zoom, tile_format, output_format):
+def process_geojson(boundaries, max_zoom, tile_format, output_format, output_file=None):
     """Process entire list of boundaries."""
     total_tiles = 0
 
     # Loop through all boundaries and compute tiles for each
     for bound in boundaries:
-        bound_tiles = tile_search(bound, max_zoom, tile_format, output_format)
+        bound_tiles = tile_search(bound, max_zoom, tile_format, output_format, output_file)
         total_tiles += bound_tiles
 
     return total_tiles
